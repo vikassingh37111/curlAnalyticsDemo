@@ -1,13 +1,8 @@
 Rails.application.routes.draw do
-  resources :countries
-  resources :articles
-  resources :posts
   devise_for :users
   root 'home#index'
 
   get 'home/index'
-  get 'home/show'
-  get 'home/edit'
 
   # Rails.application.routes.draw do
   #   devise_for :users, controllers: { sessions: 'users/sessions' }

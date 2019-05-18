@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start: 1
+  end: 1
+  incr: 1
+  user: one
+
+two:
+  start: 1
+  end: 1
+  incr: 1
+  user: two

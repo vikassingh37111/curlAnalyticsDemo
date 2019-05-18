@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190504203103) do
+ActiveRecord::Schema.define(version: 20190518151623) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "datapoints", force: :cascade do |t|
+    t.integer "value"
+    t.datetime "server_dispatch_time"
+    t.bigint "graph_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["graph_id"], name: "index_datapoints_on_graph_id"
+  end
+
+  create_table "graphs", force: :cascade do |t|
+    t.integer "start"
+    t.integer "end"
+    t.integer "incr"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_graphs_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -27,4 +46,6 @@ ActiveRecord::Schema.define(version: 20190504203103) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "datapoints", "graphs"
+  add_foreign_key "graphs", "users"
 end

@@ -1,7 +1,28 @@
 // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
+@import "datatables";
 
 .btn-loginout{
 	background: #ffffff;
 }
-@import "datatables";
+.container{
+		text-align: center;
+}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+.graph{
+	box-shadow: 3px 2px 18px -3px rgba(0,0,0,0.6);
+}
