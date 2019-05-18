@@ -79,3 +79,5 @@ gem 'pg'
 gem 'rails_12factor'
 
 gem 'redis'
+
+gem 'd3-rails'

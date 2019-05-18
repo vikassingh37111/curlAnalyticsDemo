@@ -1,3 +1,9 @@
+// Move this piece of code to Rails assets pipeline. 
+// This is temporary fir for Heroku Production Deployment
+var imported = document.createElement('script');
+imported.src = 'https://d3js.org/d3.v3.min.js';
+document.head.appendChild(imported);
+
 var graphConfig = {
 	data: [],
 	title1: "",
