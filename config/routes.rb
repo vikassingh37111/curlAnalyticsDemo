@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'home/index'
+  post 'home/start_graph'
 
   # Rails.application.routes.draw do
   #   devise_for :users, controllers: { sessions: 'users/sessions' }

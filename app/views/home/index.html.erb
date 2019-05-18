@@ -1,2 +1,17 @@
 <h1>Live Graph</h1>
-<div id="graph" class="graph"> </div>
+<form name="createGraph" class="form-inline my-2 my-lg-0 d-inline" action="/home/start_graph"  onsubmit="return validateForm()" method="post">
+	<span>Start</span>
+  <input id="start" name="start" class="form-control mr-sm-1">
+	<span>End</span>
+  <input id="end" name="end" class="form-control mr-sm-1">
+	<span>Incr</span>
+  <input id="incr" name="incr" class="form-control mr-sm-1">
+  <button class="btn btn-outline-success my-2 my-sm-0 mr-2" type="submit">Submit</button>  
+</form>
+<h3 class="my-4"> 
+  Graph ID: <span id="graphID"> </span>
+</h3>
+<div id="graphContainer" class="graph-container">
+    <h4 class="pt-3">Data (Y) vs Browser Receive Time (X)</h4>
+    <div id="graph" class="graph"> </div>
+</div>

@@ -1,21 +1,9 @@
 var graphConfig = {
 	data: [],
 	title1: "",
-	dateformat: "%Y-%m-%d"
+	dateformat: "%Y-%m-%dT%H:%M:%S.%L%LZ",
+	graphID: ""
 };
-
-var dataAll =[
- 	    {"date":"2012-01-01","value":4.13},
-	    {"date":"2012-01-02","value":4.88},
-	    {"date":"2012-01-03","value":5.89},
-	    {"date":"2012-01-04","value":5.87},
-	    {"date":"2012-01-05","value":8.54},
-	    {"date":"2012-01-06","value":4.41},
-	    {"date":"2012-01-07","value":8.56},
-	    {"date":"2012-01-08","value":8.05},
-	    {"date":"2012-01-09","value":8.13},
-	    {"date":"2012-01-10","value":5.86}
-	    ] ;
 
 App.graph = App.cable.subscriptions.create("GraphChannel", {
   connected: function() {
@@ -25,19 +13,24 @@ App.graph = App.cable.subscriptions.create("GraphChannel", {
   },
   received: function(dataPoint) {
   	$(document).ready(function(){
-			graphConfig.data.push(dataAll[dataPoint%9]);
+  		if(dataPoint.isNewGraph){
+  			graphConfig.graphID = dataPoint.graph_id;
+				graphConfig.data = [];
+  		}
+  		graphConfig.data.push({"date": (new Date()), "value": dataPoint.value});
 			drawTimeSeriesGraph(graphConfig.data, graphConfig.title1, graphConfig.dateformat);	
 		});
   }
 });
-
+ 
 function clearCanvas(){
 	$("#graph").html("");
 }
 
 function drawTimeSeriesGraph(data,title,dateformat) {
 		clearCanvas();
-
+		$("#graph").html("");
+		$("#graphID").html(graphConfig.graphID);
 		//Set bounds for red dots
 		var lbound = 0.045,
 			ubound = 0.075;
@@ -102,6 +95,17 @@ function drawTimeSeriesGraph(data,title,dateformat) {
 		        .attr("class", "line")
 		        .attr("d", valueline(data));
 
+		    // data point circles
+        lineSvg.selectAll("line-circle")
+    		.data(data)
+      	.enter().append("circle")
+        .attr("class", "data-circle")
+        .attr("r", 4)
+        .attr("cx", function(d) { return x(d.date); })
+        .attr("cy", function(d) { return y(d.value); })
+  			.style("fill", "steelblue")
+		    .style("stroke", "steelblue");
+
 		    // Add the X Axis
 		    svg.append("g")
 		        .attr("class", "x axis")
@@ -134,9 +138,9 @@ function drawTimeSeriesGraph(data,title,dateformat) {
 		    // append the circle at the intersection
 		    focus.append("circle")
 		        .attr("class", "y")
-		        .style("fill", "none")
-		        .style("stroke", "blue")
-		        .attr("r", 4);
+		        .style("fill", "steelblue")
+		        .style("stroke", "steelblue")
+		        .attr("r", 7);
 
 		    // place the value at the intersection
 		    focus.append("text")
